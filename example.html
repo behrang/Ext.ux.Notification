@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Notifications</title>
+  <style type="text/css">
+    .notification {
+      background: #eeeeee;
+      padding: 4px;
+    }
+
+    .notification .message {
+      padding: 2px;
+    }
+
+    .notification .success {
+      color: green;
+    }
+
+    .notification .warning {
+      color: orange;
+    }
+
+    .notification .error {
+      color: red;
+    }
+  </style>
+  <link rel="stylesheet" type="text/css" href="http://cdn.sencha.com/ext/gpl/4.2.1/resources/css/ext-all.css" />
+  <script type="text/javascript" src="http://cdn.sencha.com/ext/gpl/4.2.1/ext-all-dev.js"></script>
+  <script type="text/javascript">
+    Ext.Loader.setPath('Ext.ux', '.');
+    Ext.require('Ext.ux.Notification', function () {
+      var notification = Ext.widget('notification', {
+        renderTo: Ext.getBody(),
+        width: 150,
+        cls: 'notification'
+      });
+      notification.anchorTo(document, 't-t');
+
+      Ext.widget('button', {
+        text: 'Info',
+        renderTo: Ext.getBody(),
+        handler: function () {
+          notification.info('Sample info message.');
+        }
+      });
+      Ext.widget('button', {
+        text: 'Success',
+        renderTo: Ext.getBody(),
+        handler: function () {
+          notification.success('A success message.');
+        }
+      });
+      Ext.widget('button', {
+        text: 'Warning',
+        renderTo: Ext.getBody(),
+        handler: function () {
+          notification.warning('Warning!!!');
+        }
+      });
+      Ext.widget('button', {
+        text: 'Error',
+        renderTo: Ext.getBody(),
+        handler: function () {
+          notification.error('An error occurred.');
+        }
+      });
+      Ext.widget('button', {
+        text: 'Custom',
+        renderTo: Ext.getBody(),
+        handler: function () {
+          var m = Ext.widget({
+            xtype: 'panel',
+            autoHide: false,
+            items: [
+              {html: 'Do you agree?'},
+              {xtype: 'button', text: 'Yes', handler: function () {
+                  notification.removeMessage(m);
+              }},
+              {xtype: 'button', text: 'no'}
+            ]
+          });
+          notification.info(m);
+        }
+      });
+      Ext.widget('button', {
+        text: 'Config',
+        renderTo: Ext.getBody(),
+        handler: function () {
+          notification.info({
+            xtype: 'container',
+            delay: 10000,
+            items: [
+              {html: 'This is a message with longer delay.'}
+            ]
+          });
+        }
+      });
+    });
+  </script>
+</head>
+<body>
+</body>
+</html>
